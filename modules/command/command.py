@@ -42,9 +42,9 @@ class Command:  # pylint: disable=too-many-instance-attributes
         cls,
         connection: mavutil.mavfile,
         target: Position,
-        args,  # Put your own arguments here
+        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
-    ):
+    ) -> "Command":
         """
         Falliable create (instantiation) method to create a Command object.
         """
@@ -57,7 +57,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         key: object,
         connection: mavutil.mavfile,
         target: Position,
-        args,  # Put your own arguments here
+        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> None:
         assert key is Command.__private_key, "Use create() method"
@@ -68,8 +68,8 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.args = args
         self.logger = local_logger
 
-    def run(self, telemetry):
-        current_altitude = telemetry.z
+    def run(self, telemetry_data: object) -> tuple[bool, str]:
+        current_altitude = telemetry_data.z
 
         if current_altitude < self.target.z - HEIGHT_TOLERANCE:
             delta_altitude = self.target.z - current_altitude
@@ -109,8 +109,10 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         else:
 
-            desired_yaw = math.atan2(self.target.y - telemetry.y, self.target.x - telemetry.x)
-            current_yaw = telemetry.yaw
+            desired_yaw = math.atan2(
+                self.target.y - telemetry_data.y, self.target.x - telemetry_data.x
+            )
+            current_yaw = telemetry_data.yaw
 
             yaw_diff = (desired_yaw - current_yaw) * 180 / math.pi
             yaw_diff = (yaw_diff + 180) % 360 - 180

@@ -19,8 +19,8 @@ class HeartbeatSender:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args,  # Put your own arguments here
-    ) -> "tuple[True, HeartbeatSender] | tuple[False, None]":
+        args: object,  # Put your own arguments here
+    ) -> tuple[bool, "HeartbeatSender | None"]:
         """
         Falliable create (instantiation) method to create a HeartbeatSender object.
         """
@@ -35,8 +35,8 @@ class HeartbeatSender:
         self,
         key: object,
         connection: mavutil.mavfile,
-        args,  # Put your own arguments here
-    ):
+        args: object,  # Put your own arguments here
+    ) -> None:
         assert key is HeartbeatSender.__private_key, "Use create() method"
 
         # Do any intializiation here
@@ -47,8 +47,8 @@ class HeartbeatSender:
 
     def run(
         self,
-        args,  # Put your own arguments here
-    ):
+        args: object,  # Put your own arguments here
+    ) -> tuple[bool, str]:
         """
         Attempt to send a heartbeat message.
         """

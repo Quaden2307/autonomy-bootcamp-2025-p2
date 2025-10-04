@@ -19,7 +19,7 @@ from ..common.modules.logger import logger
 def heartbeat_sender_worker(
     connection: mavutil.mavfile,
     controller: worker_controller.WorkerController,
-    args,  # Place your own arguments here
+    args: object,  # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
     """
