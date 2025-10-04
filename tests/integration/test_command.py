@@ -59,7 +59,7 @@ def stop(
     """
     Stop the workers.
     """
-    pass  # Add logic to stop your worker
+    args["controller"].request_exit()  # Add logic to stop your worker
 
 
 def read_queue(
@@ -69,7 +69,15 @@ def read_queue(
     """
     Read and print the output queue.
     """
-    pass  # Add logic to read from your worker's output queue and print it using the logger
+    while not args["controller"].is_exit_requested():
+        try:
+            data = args["output_queue"].queue.get(timeout=1)
+            main_logger.info(f"Worker output: {data}")
+        except Exception:
+            continue
+
+
+# Add logic to read from your worker's output queue and print it using the logger
 
 
 def put_queue(
@@ -78,8 +86,14 @@ def put_queue(
     """
     Place mocked inputs into the input queue periodically with period TELEMETRY_PERIOD.
     """
-    pass  # Add logic to place the mocked inputs into your worker's input queue periodically
+    for telem in args["path"]:  # now it comes from args
+        if args["controller"].is_exit_requested():
+            break
+        args["input_queue"].queue.put(telem)
+        time.sleep(TELEMETRY_PERIOD)
 
+
+# Add logic to place the mocked inputs into your worker's input queue periodically
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -216,6 +230,20 @@ def main() -> int:
         ),
     ]
 
+    # Create worker controller and manager
+    controller = worker_controller.WorkerController()
+    manager = mp.Manager()
+
+    input_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
+    output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
+
+    args = {
+        "controller": controller,
+        "input_queue": input_queue,
+        "output_queue": output_queue,
+        "path": path,
+    }
+
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(TELEMETRY_PERIOD * len(path), stop, (args,)).start()
 
@@ -225,9 +253,9 @@ def main() -> int:
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(args, main_logger)).start()
 
-    command_worker.command_worker(
-        # Place your own arguments here
-    )
+    command_worker.command_worker(connection, TARGET, args, input_queue, output_queue, controller)
+    # Place your own arguments here
+
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
     # =============================================================================================

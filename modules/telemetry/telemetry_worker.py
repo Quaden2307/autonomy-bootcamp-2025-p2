@@ -20,6 +20,9 @@ def telemetry_worker(
     connection: mavutil.mavfile,
     args,  # Place your own arguments here
     # Add other necessary worker arguments here
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    output_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    controller: worker_controller.WorkerController,
 ) -> None:
     """
     Worker process.
@@ -47,8 +50,21 @@ def telemetry_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (telemetry.Telemetry)
-
+    result, telemetry_instance = telemetry.Telemetry.create(connection, args, local_logger)
+    if not result or telemetry_instance is None:
+        local_logger.error("Failed to create Telemetry instance", True)
+        return
     # Main loop: do work.
+    while not controller.is_exit_requested():
+        controller.check_pause()
+
+        success, data = telemetry_instance.run(args)
+        if not success or data is None:
+            local_logger.warning("Telemetry run failed or returned no data", True)
+            continue
+
+        output_queue.queue.put(data)
+        local_logger.info(f"Telemetry pushed: {data}", True)
 
 
 # =================================================================================================

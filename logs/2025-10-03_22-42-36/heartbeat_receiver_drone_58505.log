@@ -1,0 +1,13 @@
+22:42:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | main | 42] Logger initialized
+22:42:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:37: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:38: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:39: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:40: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:51: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:52: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:53: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | send_heartbeats | 59] Drone: Sent a heartbeat
+22:42:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/heartbeat_receiver_drone.py | main | 79] Passesd!

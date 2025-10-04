@@ -82,7 +82,12 @@ class Telemetry:
         """
         Falliable create (instantiation) method to create a Telemetry object.
         """
-        pass  # Create a Telemetry object
+        try:
+            instance = Telemetry(cls.__private_key, connection, args, local_logger)
+            return True, instance
+        except Exception as e:
+            local_logger.error(f"Failed to create Telemetry instance: {e}", True)
+            return False, None  # Create a Telemetry object
 
     def __init__(
         self,
@@ -94,6 +99,9 @@ class Telemetry:
         assert key is Telemetry.__private_key, "Use create() method"
 
         # Do any intializiation here
+        self.connection = connection
+        self.args = args
+        self.local_logger = local_logger
 
     def run(
         self,
@@ -103,10 +111,53 @@ class Telemetry:
         Receive LOCAL_POSITION_NED and ATTITUDE messages from the drone,
         combining them together to form a single TelemetryData object.
         """
+
         # Read MAVLink message LOCAL_POSITION_NED (32)
         # Read MAVLink message ATTITUDE (30)
         # Return the most recent of both, and use the most recent message's timestamp
-        pass
+        start_time = time.time()
+        pos_msg = None
+        att_msg = None
+
+        while time.time() - start_time < 2:  # 1 second timeout
+            msg = self.connection.recv_match(
+                type=["LOCAL_POSITION_NED", "ATTITUDE"], blocking=True, timeout=1
+            )
+
+            if msg is None:
+                continue
+
+            if msg.get_type() == "LOCAL_POSITION_NED":
+                pos_msg = msg
+            elif msg.get_type() == "ATTITUDE":
+                att_msg = msg
+
+            # if both, break early
+            if pos_msg and att_msg:
+                break
+
+        if not pos_msg or not att_msg:
+            self.local_logger.warning("Did not receive both ATTITUDE and POSITION in time", True)
+            return True, None
+
+        # TelemetryData object
+        data = TelemetryData(
+            time_since_boot=max(pos_msg.time_boot_ms, att_msg.time_boot_ms),
+            x=pos_msg.x,
+            y=pos_msg.y,
+            z=pos_msg.z,
+            x_velocity=pos_msg.vx,
+            y_velocity=pos_msg.vy,
+            z_velocity=pos_msg.vz,
+            roll=att_msg.roll,
+            pitch=att_msg.pitch,
+            yaw=att_msg.yaw,
+            roll_speed=att_msg.rollspeed,
+            pitch_speed=att_msg.pitchspeed,
+            yaw_speed=att_msg.yawspeed,
+        )
+
+        return True, data
 
 
 # =================================================================================================

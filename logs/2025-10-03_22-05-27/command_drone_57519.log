@@ -1,0 +1,2 @@
+22:05:27: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/command_drone.py | main | 45] Logger initialized
+22:05:30: [ERROR] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/command_drone.py | main | 51] Sent incorrect message type or timed out, still expecting mesages

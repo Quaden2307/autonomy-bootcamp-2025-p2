@@ -20,6 +20,9 @@ def command_worker(
     connection: mavutil.mavfile,
     target: command.Position,
     args,  # Place your own arguments here
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    output_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    controller: worker_controller.WorkerController,
     # Add other necessary worker arguments here
 ) -> None:
     """
@@ -48,8 +51,20 @@ def command_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (command.Command)
-
+    command_instance = command.Command.create(connection, target, args, local_logger)
     # Main loop: do work.
+    while not controller.is_exit_requested():
+        controller.check_pause()
+        telemetry_data = input_queue.queue.get()
+
+        if telemetry_data is None:
+            break
+
+        result, decision = command_instance.run(telemetry_data)
+        if not result:
+            continue
+
+        output_queue.queue.put(decision)
 
 
 # =================================================================================================
