@@ -7,7 +7,6 @@ import pathlib
 
 from pymavlink import mavutil
 
-from utilities.workers import queue_proxy_wrapper
 from utilities.workers import worker_controller
 from . import heartbeat_receiver
 from ..common.modules.logger import logger
@@ -50,6 +49,7 @@ def heartbeat_receiver_worker(
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
     heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, args, local_logger)
 
+    _ = args
     # Main loop: do work.
     while not controller.is_exit_requested():
         controller.check_pause()
