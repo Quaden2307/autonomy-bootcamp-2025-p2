@@ -104,6 +104,7 @@ def main() -> int:
         [heartbeat_in],  # input_queues
         [heartbeat_out],  # output_queues
         controller,  # controller
+        main_logger,
     )
 
     # Heartbeat receiver
@@ -117,6 +118,7 @@ def main() -> int:
         [heartbeat_in],
         [heartbeat_out],
         controller,
+        main_logger,
     )
 
     # Telemetry
@@ -130,29 +132,26 @@ def main() -> int:
         [telemetry_in],
         [telemetry_out],
         controller,
+        main_logger,
     )
     # Command
     command_props = worker_manager.WorkerProperties(
         command_worker.command_worker,
-        (
-            connection,
-            TARGET_POSITION,
-            {},
-            command_in,
-            command_out,
-            controller,
-        ),
+        (connection, TARGET_POSITION, None, command_in, command_out, controller, main_logger),
         NUM_COMMAND,
         [command_in],  # inputs
         [command_out],  # outputs
         controller,
+        main_logger,
     )
     # Create the workers (processes) and obtain their managers
     workers = [
-        worker_manager.WorkerManager(heartbeat_sender_props, main_logger),
-        worker_manager.WorkerManager(heartbeat_receiver_props, main_logger),
-        worker_manager.WorkerManager(telemetry_props, main_logger),
-        worker_manager.WorkerManager(command_props, main_logger),
+        worker_manager.WorkerManager(heartbeat_sender_props, controller, main_logger, main_logger),
+        worker_manager.WorkerManager(
+            heartbeat_receiver_props, controller, main_logger, main_logger
+        ),
+        worker_manager.WorkerManager(telemetry_props, controller, main_logger, main_logger),
+        worker_manager.WorkerManager(command_props, controller, main_logger, main_logger),
     ]
     # Start worker processes
     for w in workers:
@@ -178,7 +177,7 @@ def main() -> int:
 
         except queue.Empty:
             continue
-        except Exception as e:
+        except (OSError, RuntimeError, ValueError) as e:
             main_logger.error(f"Error while reading queues: {e}")
             break
 
