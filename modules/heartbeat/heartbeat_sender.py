@@ -24,6 +24,7 @@ class HeartbeatSender:
         """
         Falliable create (instantiation) method to create a HeartbeatSender object.
         """
+        _ = args
         try:
             instance = HeartbeatSender(cls.__private_key, connection, args)
             return True, instance
@@ -35,13 +36,12 @@ class HeartbeatSender:
         self,
         key: object,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
+
     ) -> None:
         assert key is HeartbeatSender.__private_key, "Use create() method"
 
         # Do any intializiation here
         self.connection = connection
-        self.args = args
         self.system_id = 1
         self.component_id = 1
 
@@ -52,6 +52,7 @@ class HeartbeatSender:
         """
         Attempt to send a heartbeat message.
         """
+        _ = args
         try:
             self.connection.mav.heartbeat_send(
                 type=mavutil.mavlink.MAV_TYPE_GCS,
@@ -61,7 +62,7 @@ class HeartbeatSender:
                 system_status=mavutil.mavlink.MAV_STATE_ACTIVE,
             )
             return True, "Heartbeat sent successfully"
-        except Exception as e:
+        except (OSError, ValueError, RuntimeError) as e:
             return False, f"Failed to send heartbeat: {e}"
         # Send a heartbeat message
 
