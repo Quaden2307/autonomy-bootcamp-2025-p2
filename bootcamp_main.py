@@ -137,13 +137,13 @@ def main() -> int:
         (
             connection,
             TARGET_POSITION,
-            {"controller": controller, "input_queue": command_in, "output_queue": command_out},
-            telemetry_in,
-            telemetry_out,
+            {},
+            command_in,
+            command_out,
             controller,
         ),
         NUM_COMMAND,
-        [command_in, telemetry_in],  # inputs
+        [command_in],  # inputs
         [command_out],  # outputs
         controller,
     )
