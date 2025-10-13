@@ -85,7 +85,7 @@ class Telemetry:
         try:
             instance = Telemetry(cls.__private_key, connection, args, local_logger)
             return True, instance
-        except Exception as e:
+        except (OSError, ValueError, RuntimeError) as e:
             local_logger.error(f"Failed to create Telemetry instance: {e}", True)
             return False, None  # Create a Telemetry object
 
@@ -111,7 +111,7 @@ class Telemetry:
         Receive LOCAL_POSITION_NED and ATTITUDE messages from the drone,
         combining them together to form a single TelemetryData object.
         """
-
+        _ = args
         # Read MAVLink message LOCAL_POSITION_NED (32)
         # Read MAVLink message ATTITUDE (30)
         # Return the most recent of both, and use the most recent message's timestamp

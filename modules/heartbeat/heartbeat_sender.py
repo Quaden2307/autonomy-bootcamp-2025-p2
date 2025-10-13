@@ -28,7 +28,7 @@ class HeartbeatSender:
         try:
             instance = HeartbeatSender(cls.__private_key, connection)
             return True, instance
-        except Exception as e:
+        except (OSError, ValueError, RuntimeError) as e:
             print(f"Failed to create HeartbeatSender: {e}")
             return False, None  # Create a HeartbeatSender object
 
