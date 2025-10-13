@@ -26,7 +26,7 @@ class HeartbeatSender:
         """
         _ = args
         try:
-            instance = HeartbeatSender(cls.__private_key, connection, args)
+            instance = HeartbeatSender(cls.__private_key, connection)
             return True, instance
         except Exception as e:
             print(f"Failed to create HeartbeatSender: {e}")
@@ -36,7 +36,6 @@ class HeartbeatSender:
         self,
         key: object,
         connection: mavutil.mavfile,
-
     ) -> None:
         assert key is HeartbeatSender.__private_key, "Use create() method"
 

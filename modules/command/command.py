@@ -7,7 +7,6 @@ import math
 from pymavlink import mavutil
 
 from ..common.modules.logger import logger
-from ..telemetry import telemetry
 
 
 class Position:
@@ -69,6 +68,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.logger = local_logger
 
     def run(self, telemetry_data: object) -> tuple[bool, str]:
+        """Make a decision based on received telemetry data."""
         current_altitude = telemetry_data.z
 
         if current_altitude < self.target.z - HEIGHT_TOLERANCE:
@@ -89,7 +89,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
             )
             return True, f"CHANGE_ALTITUDE: {delta_altitude}"
 
-        elif current_altitude > self.target.z + HEIGHT_TOLERANCE:
+        if current_altitude > self.target.z + HEIGHT_TOLERANCE:
             delta_altitude = self.target.z - current_altitude
             self.logger.info(f"Decision: CHANGE_ALTITUDE by {delta_altitude}", True)
             self.connection.mav.command_long_send(
@@ -107,50 +107,31 @@ class Command:  # pylint: disable=too-many-instance-attributes
             )
             return True, f"CHANGE_ALTITUDE: {delta_altitude}"
 
-        else:
+        desired_yaw = math.atan2(self.target.y - telemetry_data.y, self.target.x - telemetry_data.x)
+        current_yaw = telemetry_data.yaw
 
-            desired_yaw = math.atan2(
-                self.target.y - telemetry_data.y, self.target.x - telemetry_data.x
+        yaw_diff = (desired_yaw - current_yaw) * 180 / math.pi
+        yaw_diff = (yaw_diff + 180) % 360 - 180
+
+        if abs(yaw_diff) > ANGLE_TOLERANCE:
+            self.logger.info(f"Decision: CHANGING_YAW by {yaw_diff} degrees", True)
+            self.connection.mav.command_long_send(
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+                0,
+                yaw_diff,
+                TURNING_SPEED,
+                1,
+                1,
+                0,
+                0,
+                0,
             )
-            current_yaw = telemetry_data.yaw
+            return True, f"CHANGING_YAW: {yaw_diff}"
 
-            yaw_diff = (desired_yaw - current_yaw) * 180 / math.pi
-            yaw_diff = (yaw_diff + 180) % 360 - 180
-
-            if abs(yaw_diff) > ANGLE_TOLERANCE:
-                self.logger.info(f"Decision: CHANGING_YAW by {yaw_diff} degrees", True)
-                self.connection.mav.command_long_send(
-                    1,
-                    0,
-                    mavutil.mavlink.MAV_CMD_CONDITION_YAW,
-                    0,
-                    yaw_diff,
-                    TURNING_SPEED,
-                    1,
-                    1,
-                    0,
-                    0,
-                    0,
-                )
-                return True, f"CHANGING_YAW: {yaw_diff}"
-            else:
-                self.logger.info("Decision: HOLDING_YAW (within tolerance)", True)
-                return True, "HOLDING_YAW"
-
-        """
-        Make a decision based on received telemetry data.
-        """
-        # Log average velocity for this trip so far
-
-        # Use COMMAND_LONG (76) message, assume the target_system=1 and target_componenet=0
-        # The appropriate commands to use are instructed below
-
-        # Adjust height using the comand MAV_CMD_CONDITION_CHANGE_ALT (113)
-        # String to return to main: "CHANGE_ALTITUDE: {amount you changed it by, delta height in meters}"
-
-        # Adjust direction (yaw) using MAV_CMD_CONDITION_YAW (115). Must use relative angle to current state
-        # String to return to main: "CHANGING_YAW: {degree you changed it by in range [-180, 180]}"
-        # Positive angle is counter-clockwise as in a right handed system
+        self.logger.info("Decision: HOLDING_YAW (within tolerance)", True)
+        return True, "HOLDING_YAW"
 
 
 # =================================================================================================

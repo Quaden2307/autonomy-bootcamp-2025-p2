@@ -62,7 +62,7 @@ class HeartbeatReceiver:
         """
 
         _ = args
-        
+
         msg = self.connection.recv_match(type="HEARTBEAT", blocking=True)
         if msg is None:
             self.missed_heartbeats += 1
