@@ -68,7 +68,7 @@ def read_queue(
         try:
             data = args["output_queue"].queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
-        except Exception:
+        except (OSError, ValueError, RuntimeError):
             continue  # Add logic to read from your worker's output queue and print it using the logger
 
 
