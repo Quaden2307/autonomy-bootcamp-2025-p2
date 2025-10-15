@@ -1,10 +1,9 @@
-from __future__ import annotations
-
 """
 Telemetry gathering logic.
 """
-
 import time
+from __future__ import annotations
+
 
 from pymavlink import mavutil
 
