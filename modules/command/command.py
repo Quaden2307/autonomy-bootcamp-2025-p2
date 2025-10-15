@@ -40,14 +40,13 @@ class Command:  # pylint: disable=too-many-instance-attributes
         cls,
         connection: mavutil.mavfile,
         target: Position,
-        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> tuple[bool, Command | None]:
         """
         Falliable create (instantiation) method to create a Command object.
         """
         try:
-            instance = Command(cls.__private_key, connection, target, args, local_logger)
+            instance = Command(cls.__private_key, connection, target, local_logger)
             return True, instance
         except (OSError, ValueError, RuntimeError) as e:
             local_logger.error(f"Failed to create Command instance: {e}", True)
@@ -58,7 +57,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
         key: object,
         connection: mavutil.mavfile,
         target: Position,
-        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> None:
         assert key is Command.__private_key, "Use create() method"
@@ -66,7 +64,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
         # Do any intializiation here
         self.connection = connection
         self.target = target
-        self.args = args
         self.logger = local_logger
         self.height_tolerance = 0.5
         self.angle_tolerance = 5

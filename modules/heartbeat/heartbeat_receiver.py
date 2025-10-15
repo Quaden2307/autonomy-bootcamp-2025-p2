@@ -21,13 +21,12 @@ class HeartbeatReceiver:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> "HeartbeatReceiver":
         """
         Falliable create (instantiation) method to create a HeartbeatReceiver object.
         """
-        return HeartbeatReceiver(cls.__private_key, connection, args, local_logger)
+        return HeartbeatReceiver(cls.__private_key, connection, local_logger)
 
     # Create a HeartbeatReceiver object
 
@@ -35,7 +34,6 @@ class HeartbeatReceiver:
         self,
         key: object,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> None:
         assert key is HeartbeatReceiver.__private_key, "Use create() method"
@@ -44,16 +42,16 @@ class HeartbeatReceiver:
 
         self.connection = connection
         self.logger = local_logger
-        self.args = args
+
 
         self.missed_heartbeats = 0
         self.max_missed = (
             5  # Max number of heartbeats that can be missed before the connection lost
         )
+        self.connected = False
 
     def run(
         self,
-        args: object,  # Put your own arguments here
     ) -> tuple[bool, object]:
         """
         Attempt to recieve a heartbeat message.
@@ -61,21 +59,27 @@ class HeartbeatReceiver:
         the connection is considered disconnected.
         """
 
-        _ = args
 
         msg = self.connection.recv_match(type="HEARTBEAT", blocking=True)
         if msg is None:
             self.missed_heartbeats += 1
+        
             self.logger.warning(f"Missed heartbeat ({self.missed_heartbeats})", True)
 
             if self.missed_heartbeats >= self.max_missed:
-                self.logger.error("Connection lost", True)
+                if self.connected:
+                    self.logger.error("Drone disconnected", True)
+                    self.connected = False
                 return False, "DISCONNECTED"
 
             return False, None
 
         self.missed_heartbeats = 0
-        self.logger.info("Heartbeat received", True)
+        if not self.connected:
+            self.logger.info("Drone Connected", True)
+            self.connected = True
+        else:
+            self.logger.debug("HEARTBEAT_OK", True)
         return True, "HEARTBEAT_OK"
 
 

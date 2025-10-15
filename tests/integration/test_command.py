@@ -73,7 +73,7 @@ def read_queue(
             data = output_queue.queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
         except (OSError, ValueError, RuntimeError):
-            break
+            continue
 
 
 # Add logic to read from your worker's output queue and print it using the logger
@@ -238,12 +238,6 @@ def main() -> int:
     input_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
     output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
 
-    args = {
-        "controller": controller,
-        "input_queue": input_queue,
-        "output_queue": output_queue,
-        "path": path,
-    }
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(TELEMETRY_PERIOD * len(path), stop, (controller,)).start()
@@ -254,7 +248,7 @@ def main() -> int:
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(output_queue, controller, main_logger)).start()
 
-    command_worker.command_worker(connection, TARGET, args, input_queue, output_queue, controller)
+    command_worker.command_worker(connection, TARGET, input_queue, output_queue, controller)
     # Place your own arguments here
 
     # =============================================================================================

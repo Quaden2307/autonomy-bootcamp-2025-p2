@@ -3,6 +3,7 @@ Heartbeat sending logic.
 """
 
 from pymavlink import mavutil
+from ..common.modules.logger import logger
 
 
 # =================================================================================================
@@ -19,39 +20,42 @@ class HeartbeatSender:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
+        local_logger: logger.Logger,
+ 
     ) -> tuple[bool, "HeartbeatSender | None"]:
         """
         Falliable create (instantiation) method to create a HeartbeatSender object.
         """
-        _ = args
         try:
-            instance = HeartbeatSender(cls.__private_key, connection)
+            instance = HeartbeatSender(cls.__private_key, connection, local_logger)
+            local_logger.info("HeartbeatSender instance created successfully", True)
             return True, instance
         except (OSError, ValueError, RuntimeError) as e:
-            print(f"Failed to create HeartbeatSender: {e}")
-            return False, None  # Create a HeartbeatSender object
+            local_logger.error(f"Failed to create HeartbeatSender: {e}", True)
+            return False, None  
 
     def __init__(
         self,
         key: object,
         connection: mavutil.mavfile,
+        local_logger: logger.Logger,
     ) -> None:
         assert key is HeartbeatSender.__private_key, "Use create() method"
 
         # Do any intializiation here
         self.connection = connection
+        self.logger = local_logger
         self.system_id = 1
         self.component_id = 1
 
     def run(
         self,
-        args: object,  # Put your own arguments here
+
     ) -> tuple[bool, str]:
         """
         Attempt to send a heartbeat message.
         """
-        _ = args
+
         try:
             self.connection.mav.heartbeat_send(
                 type=mavutil.mavlink.MAV_TYPE_GCS,
@@ -60,9 +64,11 @@ class HeartbeatSender:
                 custom_mode=0,
                 system_status=mavutil.mavlink.MAV_STATE_ACTIVE,
             )
-            return True, "Heartbeat sent successfully"
+            self.logger.debug("Heartbeat sent successfully", True)
+            return True, "HEARTBEAT_SENT"
         except (OSError, ValueError, RuntimeError) as e:
-            return False, f"Failed to send heartbeat: {e}"
+            self.logger.error(f"Failed to send heartbeat: {e}", True)
+            return False, "HEARTBEAT_FAILED"
         # Send a heartbeat message
 
 

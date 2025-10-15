@@ -18,13 +18,11 @@ from ..common.modules.logger import logger
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
     controller: worker_controller.WorkerController,
-    args: object,  # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
     """
     Worker process.
 
-    args... describe what the arguments are
     """
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -47,18 +45,22 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, args, local_logger)
+    heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger)
 
-    _ = args
     # Main loop: do work.
     while not controller.is_exit_requested():
         controller.check_pause()
 
-        result, status = heartbeat_instance.run(args)
+        result, status = heartbeat_instance.run()
+
+        if status == "DISCONNECTED":
+            local_logger.warning("Drone status: DISCONNECTED", True)
+        elif status == "HEARTBEAT_OK":
+            local_logger.debug("Drone status: CONNECTED", True)
+
         if not result:
             continue
 
-        local_logger.info(f"Heartbeat status: {status}", True)
 
 
 # =================================================================================================

@@ -78,14 +78,13 @@ class Telemetry:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> tuple[bool, "Telemetry" | None]:
         """
         Falliable create (instantiation) method to create a Telemetry object.
         """
         try:
-            instance = Telemetry(cls.__private_key, connection, args, local_logger)
+            instance = Telemetry(cls.__private_key, connection, local_logger)
             return True, instance
         except (OSError, ValueError, RuntimeError) as e:
             local_logger.error(f"Failed to create Telemetry instance: {e}", True)
@@ -95,25 +94,22 @@ class Telemetry:
         self,
         key: object,
         connection: mavutil.mavfile,
-        args: object,  # Put your own arguments here
+
         local_logger: logger.Logger,
     ) -> None:
         assert key is Telemetry.__private_key, "Use create() method"
 
         # Do any intializiation here
         self.connection = connection
-        self.args = args
         self.local_logger = local_logger
 
     def run(
         self,
-        args: object,  # Put your own arguments here
     ) -> tuple[bool, TelemetryData | None]:
         """
         Receive LOCAL_POSITION_NED and ATTITUDE messages from the drone,
         combining them together to form a single TelemetryData object.
         """
-        _ = args
         # Read MAVLink message LOCAL_POSITION_NED (32)
         # Read MAVLink message ATTITUDE (30)
         # Return the most recent of both, and use the most recent message's timestamp
