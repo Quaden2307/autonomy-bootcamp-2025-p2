@@ -2,12 +2,10 @@
 Telemetry gathering logic.
 """
 
-import time
 from __future__ import annotations
 
-
+import time
 from pymavlink import mavutil
-
 from ..common.modules.logger import logger
 
 

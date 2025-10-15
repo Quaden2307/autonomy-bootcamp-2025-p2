@@ -1,13 +1,11 @@
-from __future__ import annotations
-
 """
 Decision-making logic.
 """
 
+from __future__ import annotations
+
 import math
-
 from pymavlink import mavutil
-
 from ..common.modules.logger import logger
 
 
