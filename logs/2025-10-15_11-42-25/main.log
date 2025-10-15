@@ -1,0 +1,4 @@
+11:42:25: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
+11:42:25: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | main | 136] Connected!
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGE_ALTITUDE: 1
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGE_ALTITUDE: -1

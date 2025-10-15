@@ -51,16 +51,38 @@ def command_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (command.Command)
-    command_instance = command.Command.create(connection, target, args, local_logger)
-    # Main loop: do work.
+    success, command_instance = command.Command.create(connection, target, args, local_logger)
+    if not success or command_instance is None:
+        local_logger.error("Failed to create Command instance", True)
+        return  # Main loop: do work.
+
+    velocity_samples = []
     while not controller.is_exit_requested():
         controller.check_pause()
         telemetry_data = input_queue.queue.get()
 
         if telemetry_data is None:
-            break
+            continue
 
-        result, decision = command_instance.run(telemetry_data)
+        avg_velocity = None
+
+        if (
+            telemetry_data.x_velocity is not None
+            and telemetry_data.y_velocity is not None
+            and telemetry_data.z_velocity is not None
+        ):
+
+            speed = (
+                telemetry_data.x_velocity**2
+                + telemetry_data.y_velocity**2
+                + telemetry_data.z_velocity**2
+            ) ** 0.5
+
+            velocity_samples.append(speed)
+            avg_velocity = sum(velocity_samples) / len(velocity_samples)
+            local_logger.info(f"Average velocity so far: {avg_velocity:.3f} m/s", True)
+
+        result, decision = command_instance.run(telemetry_data, avg_velocity)
         if not result:
             continue
 

@@ -1,0 +1,32 @@
+11:07:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command_worker.py | command_worker | 48] Logger initialized
+11:07:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 76] Decision: CHANGE_ALTITUDE by 1
+11:07:37: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 94] Decision: CHANGE_ALTITUDE by -1
+11:07:37: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 133] Decision: HOLDING_YAW (within tolerance)
+11:07:38: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 133] Decision: HOLDING_YAW (within tolerance)
+11:07:38: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 133] Decision: HOLDING_YAW (within tolerance)
+11:07:39: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 133] Decision: HOLDING_YAW (within tolerance)
+11:07:39: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 133] Decision: HOLDING_YAW (within tolerance)
+11:07:40: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 63.434948822922024 degrees
+11:07:40: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 90.0 degrees
+11:07:41: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 116.56505117707798 degrees
+11:07:41: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 45.0 degrees
+11:07:42: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 63.434948822922024 degrees
+11:07:42: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 90.0 degrees
+11:07:43: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 26.565051177077976 degrees
+11:07:43: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 45.0 degrees
+11:07:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 90.0 degrees
+11:07:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 45.0 degrees
+11:07:45: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 90.0 degrees
+11:07:45: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by 135.0 degrees
+11:07:46: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -26.565051177077976 degrees
+11:07:46: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -45.0 degrees
+11:07:47: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -90.0 degrees
+11:07:47: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -45.0 degrees
+11:07:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -90.0 degrees
+11:07:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -135.0 degrees
+11:07:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -63.43494882292201 degrees
+11:07:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -90.0 degrees
+11:07:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -116.56505117707798 degrees
+11:07:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -45.0 degrees
+11:07:51: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -63.43494882292201 degrees
+11:07:52: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 117] Decision: CHANGING_YAW by -90.0 degrees

@@ -1,0 +1,6 @@
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command_worker.py | command_worker | 48] Logger initialized
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command_worker.py | command_worker | 79] Average velocity so far: 4.000 m/s
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 77] Decision: CHANGE_ALTITUDE by 1
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command_worker.py | command_worker | 79] Average velocity so far: 3.000 m/s
+11:42:26: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command.py | run | 95] Decision: CHANGE_ALTITUDE by -1
+11:42:27: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/command/command_worker.py | command_worker | 79] Average velocity so far: 2.000 m/s

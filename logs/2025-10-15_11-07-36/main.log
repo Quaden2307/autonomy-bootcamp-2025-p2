@@ -1,0 +1,33 @@
+11:07:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
+11:07:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | main | 136] Connected!
+11:07:36: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGE_ALTITUDE: 1
+11:07:37: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGE_ALTITUDE: -1
+11:07:37: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: HOLDING_YAW
+11:07:38: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: HOLDING_YAW
+11:07:38: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: HOLDING_YAW
+11:07:39: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: HOLDING_YAW
+11:07:39: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: HOLDING_YAW
+11:07:40: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 63.434948822922024
+11:07:40: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 90.0
+11:07:41: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 116.56505117707798
+11:07:41: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 45.0
+11:07:42: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 63.434948822922024
+11:07:42: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 90.0
+11:07:43: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 26.565051177077976
+11:07:43: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 45.0
+11:07:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 90.0
+11:07:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 45.0
+11:07:45: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 90.0
+11:07:45: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: 135.0
+11:07:46: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -26.565051177077976
+11:07:46: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -45.0
+11:07:47: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -90.0
+11:07:47: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -45.0
+11:07:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -90.0
+11:07:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -135.0
+11:07:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -63.43494882292201
+11:07:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -90.0
+11:07:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -116.56505117707798
+11:07:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -45.0
+11:07:51: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -63.43494882292201
+11:07:52: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_command.py | read_queue | 75] Worker output: CHANGING_YAW: -90.0

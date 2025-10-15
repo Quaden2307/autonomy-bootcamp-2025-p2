@@ -53,43 +53,44 @@ def start_drone() -> None:
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
-def stop(
-    args: object,  # Add any necessary arguments
-) -> None:
+def stop(controller: worker_controller.WorkerController) -> None:
     """
     Stop the workers.
     """
-    args["controller"].request_exit()  # Add logic to stop your worker
+    controller.request_exit()  # Add logic to stop your worker
 
 
 def read_queue(
-    args: object,  # Add any necessary arguments
+    output_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    controller: worker_controller.WorkerController,
     main_logger: logger.Logger,
 ) -> None:
     """
     Read and print the output queue.
     """
-    while not args["controller"].is_exit_requested():
+    while not controller.is_exit_requested():
         try:
-            data = args["output_queue"].queue.get(timeout=1)
+            data = output_queue.queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
         except (OSError, ValueError, RuntimeError):
-            continue
+            break
 
 
 # Add logic to read from your worker's output queue and print it using the logger
 
 
 def put_queue(
-    args: object,  # Add any necessary arguments
-) -> None:
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    path: list[telemetry.TelemetryData],
+    controller: worker_controller.WorkerController,
+) -> None:  # Add any necessary arguments
     """
     Place mocked inputs into the input queue periodically with period TELEMETRY_PERIOD.
     """
-    for telem in args["path"]:  # now it comes from args
-        if args["controller"].is_exit_requested():
+    for telem in path:
+        if controller.is_exit_requested():
             break
-        args["input_queue"].queue.put(telem)
+        input_queue.queue.put(telem)
         time.sleep(TELEMETRY_PERIOD)
 
 
@@ -245,13 +246,13 @@ def main() -> int:
     }
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
-    threading.Timer(TELEMETRY_PERIOD * len(path), stop, (args,)).start()
+    threading.Timer(TELEMETRY_PERIOD * len(path), stop, (controller,)).start()
 
     # Put items into input queue
-    threading.Thread(target=put_queue, args=(args,)).start()
+    threading.Thread(target=put_queue, args=(input_queue, path, controller)).start()
 
     # Read the main queue (worker outputs)
-    threading.Thread(target=read_queue, args=(args, main_logger)).start()
+    threading.Thread(target=read_queue, args=(output_queue, controller, main_logger)).start()
 
     command_worker.command_worker(connection, TARGET, args, input_queue, output_queue, controller)
     # Place your own arguments here
