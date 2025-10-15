@@ -140,7 +140,6 @@ def main() -> int:
     heartbeat_receiver_worker.heartbeat_receiver_worker(
         connection,
         controller,
-
         # Place your own arguments here
     )
     # =============================================================================================

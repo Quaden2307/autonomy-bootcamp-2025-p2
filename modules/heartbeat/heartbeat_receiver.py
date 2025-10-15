@@ -43,7 +43,6 @@ class HeartbeatReceiver:
         self.connection = connection
         self.logger = local_logger
 
-
         self.missed_heartbeats = 0
         self.max_missed = (
             5  # Max number of heartbeats that can be missed before the connection lost
@@ -59,11 +58,10 @@ class HeartbeatReceiver:
         the connection is considered disconnected.
         """
 
-
         msg = self.connection.recv_match(type="HEARTBEAT", blocking=True)
         if msg is None:
             self.missed_heartbeats += 1
-        
+
             self.logger.warning(f"Missed heartbeat ({self.missed_heartbeats})", True)
 
             if self.missed_heartbeats >= self.max_missed:

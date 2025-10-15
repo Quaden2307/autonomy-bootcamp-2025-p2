@@ -21,7 +21,6 @@ class HeartbeatSender:
         cls,
         connection: mavutil.mavfile,
         local_logger: logger.Logger,
- 
     ) -> tuple[bool, "HeartbeatSender | None"]:
         """
         Falliable create (instantiation) method to create a HeartbeatSender object.
@@ -32,7 +31,7 @@ class HeartbeatSender:
             return True, instance
         except (OSError, ValueError, RuntimeError) as e:
             local_logger.error(f"Failed to create HeartbeatSender: {e}", True)
-            return False, None  
+            return False, None
 
     def __init__(
         self,
@@ -50,7 +49,6 @@ class HeartbeatSender:
 
     def run(
         self,
-
     ) -> tuple[bool, str]:
         """
         Attempt to send a heartbeat message.

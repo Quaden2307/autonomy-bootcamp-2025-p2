@@ -238,7 +238,6 @@ def main() -> int:
     input_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
     output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
 
-
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(TELEMETRY_PERIOD * len(path), stop, (controller,)).start()
 

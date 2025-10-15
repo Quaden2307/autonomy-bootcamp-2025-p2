@@ -94,7 +94,6 @@ class Telemetry:
         self,
         key: object,
         connection: mavutil.mavfile,
-
         local_logger: logger.Logger,
     ) -> None:
         assert key is Telemetry.__private_key, "Use create() method"
