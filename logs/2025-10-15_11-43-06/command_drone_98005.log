@@ -1,2 +1,0 @@
-11:43:06: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/command_drone.py | main | 45] Logger initialized
-11:43:06: [ERROR] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/mock_drones/command_drone.py | main | 67] Ascent/descnet speed is not the desired value: 0.0
