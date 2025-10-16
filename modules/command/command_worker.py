@@ -26,8 +26,6 @@ def command_worker(
 ) -> None:
     """
     Worker process.
-
-
     """
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -51,11 +49,10 @@ def command_worker(
     # =============================================================================================
     # Instantiate class object (command.Command)
     success, command_instance = command.Command.create(connection, target, local_logger)
-    if not success or command_instance is None:
+    if not success:
         local_logger.error("Failed to create Command instance", True)
-        return  # Main loop: do work.
+        return
 
-    velocity_samples = []
     while not controller.is_exit_requested():
         controller.check_pause()
         telemetry_data = input_queue.queue.get()
@@ -63,29 +60,55 @@ def command_worker(
         if telemetry_data is None:
             continue
 
-        avg_velocity = None
-
-        if (
-            telemetry_data.x_velocity is not None
-            and telemetry_data.y_velocity is not None
-            and telemetry_data.z_velocity is not None
-        ):
-
-            speed = (
-                telemetry_data.x_velocity**2
-                + telemetry_data.y_velocity**2
-                + telemetry_data.z_velocity**2
-            ) ** 0.5
-
-            velocity_samples.append(speed)
-            avg_velocity = sum(velocity_samples) / len(velocity_samples)
-            local_logger.info(f"Average velocity so far: {avg_velocity:.3f} m/s", True)
-
-        result, decision = command_instance.run(telemetry_data, avg_velocity)
+        result, decision_data = command_instance.run(telemetry_data)
         if not result:
             continue
 
-        output_queue.queue.put(decision)
+        action = decision_data["action"]
+
+        # === MAVLink execution logic ===
+        if action == "CHANGE_ALTITUDE":
+            altitude_diff = decision_data["altitude_diff"]
+            connection.mav.command_long_send(
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
+                0,
+                abs(altitude_diff),
+                0,
+                0,
+                0,
+                0,
+                0,
+                target.z,
+            )
+
+        elif action == "CHANGING_YAW":
+            yaw_diff = decision_data["yaw_diff"]
+            direction = -1 if yaw_diff > 0 else 1
+            connection.mav.command_long_send(
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+                0,
+                abs(yaw_diff),
+                command_instance.turning_speed,
+                direction,
+                1,
+                0,
+                0,
+                0,
+            )
+
+        # === Push decision to output queue ===
+        output_queue.queue.put(
+            {
+                "type": "decision",
+                "data": decision_data,
+            }
+        )
+
+    local_logger.info("Worker Shutting Down", True)
 
 
 # =================================================================================================

@@ -8,6 +8,7 @@ import pathlib
 from pymavlink import mavutil
 
 from utilities.workers import worker_controller
+from utilities.workers.queue_proxy_wrapper import QueueProxyWrapper
 from . import heartbeat_receiver
 from ..common.modules.logger import logger
 
@@ -18,12 +19,13 @@ from ..common.modules.logger import logger
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
     controller: worker_controller.WorkerController,
+    output_queue: QueueProxyWrapper | None = None,
     # Add other necessary worker arguments here
 ) -> None:
     """
     Worker process.
-
     """
+
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
     # =============================================================================================
@@ -45,21 +47,38 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger)
+    success, heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(
+        connection, local_logger
+    )
+    if not success:
+        local_logger.error("Failed to create HeartbeatReceiver instance", True)
+        return
 
     # Main loop: do work.
+    last_status = None
+
     while not controller.is_exit_requested():
         controller.check_pause()
 
         result, status = heartbeat_instance.run()
 
-        if status == "DISCONNECTED":
-            local_logger.warning("Drone status: DISCONNECTED", True)
-        elif status == "HEARTBEAT_OK":
-            local_logger.debug("Drone status: CONNECTED", True)
+        # Handle disconnection
+        if not result and status == "DISCONNECTED":
+            if last_status != "DISCONNECTED":
+                last_status = "DISCONNECTED"
+                local_logger.warning("Drone disconnected", True)
+                if output_queue is not None:
+                    output_queue.queue.put({"status": "DISCONNECTED"})
 
-        if not result:
-            continue
+        # Handle successful heartbeat
+        elif result and status == "HEARTBEAT_OK":
+            if last_status != "CONNECTED":
+                last_status = "CONNECTED"
+                local_logger.info("Heartbeat OK", True)
+                if output_queue is not None:
+                    output_queue.queue.put({"status": "CONNECTED"})
+
+    local_logger.info("Heartbeat receiver worker shutting down.", True)
 
 
 # =================================================================================================

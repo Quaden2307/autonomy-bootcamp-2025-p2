@@ -94,86 +94,112 @@ def main() -> int:
     # Create worker properties for each worker type (what inputs it takes, how many workers)
 
     # Heartbeat sender
-    heartbeat_sender_props = worker_manager.WorkerProperties(
+    heartbeat_sender_props = worker_manager.WorkerProperties.create(
         heartbeat_sender_worker.heartbeat_sender_worker,  # target (function)
         (
             connection,
-            {"controller": controller, "input_queue": heartbeat_in, "output_queue": heartbeat_out},
+            {"controller": controller},
         ),  # work_arguments
         NUM_HEARTBEAT_SENDERS,  # count
-        [heartbeat_in],  # input_queues
-        [heartbeat_out],  # output_queues
+        [],  # input_queues
+        [],  # output_queues
         controller,  # controller
         main_logger,
     )
 
     # Heartbeat receiver
-    heartbeat_receiver_props = worker_manager.WorkerProperties(
+    heartbeat_receiver_props = worker_manager.WorkerProperties.create(
         heartbeat_receiver_worker.heartbeat_receiver_worker,
-        (
-            connection,
-            {"controller": controller, "input_queue": heartbeat_in, "output_queue": heartbeat_out},
-        ),
+        (connection, controller, heartbeat_out),
         NUM_HEARTBEAT_RECEIVERS,
-        [heartbeat_in],
+        [],
         [heartbeat_out],
         controller,
         main_logger,
     )
 
     # Telemetry
-    telemetry_props = worker_manager.WorkerProperties(
+    telemetry_props = worker_manager.WorkerProperties.create(
         telemetry_worker.telemetry_worker,
         (
             connection,
-            {"controller": controller, "input_queue": telemetry_in, "output_queue": telemetry_out},
+            {"controller": controller, "output_queue": telemetry_out},
         ),
         NUM_TELEMETRY,
-        [telemetry_in],
+        [],
         [telemetry_out],
         controller,
         main_logger,
     )
     # Command
-    command_props = worker_manager.WorkerProperties(
+    command_props = worker_manager.WorkerProperties.create(
         command_worker.command_worker,
-        (connection, TARGET_POSITION, None, command_in, command_out, controller, main_logger),
+        (connection, TARGET_POSITION, None, telemetry_out, command_out, controller, main_logger),
         NUM_COMMAND,
-        [command_in],  # inputs
+        [telemetry_out],  # inputs
         [command_out],  # outputs
         controller,
         main_logger,
     )
-    # Create the workers (processes) and obtain their managers
-    workers = [
-        worker_manager.WorkerManager(heartbeat_sender_props, controller, main_logger, main_logger),
-        worker_manager.WorkerManager(
-            heartbeat_receiver_props, controller, main_logger, main_logger
-        ),
-        worker_manager.WorkerManager(telemetry_props, controller, main_logger, main_logger),
-        worker_manager.WorkerManager(command_props, controller, main_logger, main_logger),
-    ]
-    # Start worker processes
+
+    workers = []
+
+    for props, name in [
+        (heartbeat_sender_props, "heartbeat sender"),
+        (heartbeat_receiver_props, "heartbeat receiver"),
+        (telemetry_props, "telemetry"),
+        (command_props, "command"),
+    ]:
+        result, worker = worker_manager.WorkerManager.create(
+            props, controller, main_logger, main_logger
+        )
+        if not result or worker is None:
+            main_logger.error(f"Failed to create {name} worker manager", True)
+            return -1
+        workers.append(worker)
+
     for w in workers:
-        w.start()
-    main_logger.info("Started")
+        w.start_workers()
+
+    main_logger.info("All workers started successfully")
 
     # Main's work: read from all queues that output to main, and log any commands that we make
     # Continue running for 100 seconds or until the drone disconnects
     start_time = time.time()
     while time.time() - start_time < RUN_TIME and controller.is_exit_requested() is False:
         try:
-            if not heartbeat_out.queue.empty():
+            while not heartbeat_out.queue.empty():
                 msg = heartbeat_out.queue.get_nowait()
-                main_logger.info(f"Heartbeat: {msg}")
+
+                if isinstance(msg, dict) and "status" in msg:
+                    status = msg["status"].upper()
+                    if status == "DISCONNECTED":
+                        main_logger.warning("Drone disconnected — shutting down workers", True)
+                        controller.request_exit()
+                        break
+                    elif status == "CONNECTED":
+                        main_logger.info("Connection status: connected")
+                    else:
+                        main_logger.debug(f"Heartbeat status: {status}")
+                else:
+                    main_logger.info(f"Heartbeat: {msg}")
 
             if not telemetry_out.queue.empty():
                 data = telemetry_out.queue.get_nowait()
                 main_logger.info(f"Telemetry: {data}")
 
             if not command_out.queue.empty():
-                decision = command_out.queue.get_nowait()
-                main_logger.info(f"Command decision: {decision}")
+                message = command_out.queue.get_nowait()
+                if isinstance(message, dict) and "type" in message:
+                    if message["type"] == "velocity":
+                        v = message["data"]
+                        main_logger.info(
+                            f"Average velocity vector: x={v['x']:.3f}, y={v['y']:.3f}, z={v['z']:.3f} m/s"
+                        )
+                    elif message["type"] == "decision":
+                        main_logger.info(f"Command decision: {message['data']}")
+                else:
+                    main_logger.warning(f"Unexpected message format: {message}")
 
         except queue.Empty:
             continue
@@ -188,17 +214,15 @@ def main() -> int:
     main_logger.info("Requested exit")
 
     # Drain queues (end to start)
-    for q in [command_out, telemetry_out, heartbeat_out]:
-        while not q.queue.empty():
-            try:
-                _ = q.queue.get_nowait()
-            except queue.Empty:
-                break
+    queue_proxy_wrapper.QueueProxyWrapper.drain_all([command_out, telemetry_out, heartbeat_out])
     main_logger.info("Queues cleared")
 
     # Clean up worker processes
     for w in reversed(workers):
-        w.join()
+        w.stop_workers()
+
+    for w in reversed(workers):
+        w.join_workers()
     main_logger.info("Stopped")
 
     # We can reset controller in case we want to reuse it

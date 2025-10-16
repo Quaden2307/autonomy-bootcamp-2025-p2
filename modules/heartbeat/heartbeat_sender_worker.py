@@ -48,7 +48,7 @@ def heartbeat_sender_worker(
     # =============================================================================================
     # Instantiate class object (heartbeat_sender.HeartbeatSender)
     result, sender_instance = heartbeat_sender.HeartbeatSender.create(connection, local_logger)
-    if not result or sender_instance is None:
+    if not result:
         local_logger.error("Failed to create HeartbeatSender instance", True)
         return
 

@@ -67,57 +67,58 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.angle_tolerance = 5
         self.turning_speed = 5
 
-    def run(self, telemetry_data: object, avg_velocity: float | None = None) -> tuple[bool, str]:
+    def run(self, telemetry_data: object) -> tuple[bool, dict]:
         """Make a decision based on received telemetry data."""
-        if avg_velocity is not None:
-            self.logger.info(f"Average velocity (from worker): {avg_velocity:.3f} m/s", True)
+
+        # Initialize persistent velocity samples
+        if not hasattr(self, "x_samples"):
+            self.x_samples = []
+            self.y_samples = []
+            self.z_samples = []
+
+        # --- Compute average velocity vector ---
+        if (
+            telemetry_data.x_velocity is not None
+            and telemetry_data.y_velocity is not None
+            and telemetry_data.z_velocity is not None
+        ):
+            self.x_samples.append(telemetry_data.x_velocity)
+            self.y_samples.append(telemetry_data.y_velocity)
+            self.z_samples.append(telemetry_data.z_velocity)
+
+            avg_velocity = (
+                sum(self.x_samples) / len(self.x_samples),
+                sum(self.y_samples) / len(self.y_samples),
+                sum(self.z_samples) / len(self.z_samples),
+            )
+        else:
+            avg_velocity = (0.0, 0.0, 0.0)
+
+        # --- Compute altitude difference ---
         current_altitude = telemetry_data.z
         altitude_diff = self.target.z - current_altitude
 
-        # Altitude adjustment logic
-        if abs(altitude_diff) > self.height_tolerance:
-            self.logger.info(f"Decision: CHANGE_ALTITUDE by {altitude_diff}", True)
-            self.connection.mav.command_long_send(
-                1,
-                0,
-                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
-                0,
-                abs(altitude_diff),
-                0,
-                0,
-                0,
-                0,
-                0,
-                self.target.z,
-            )
-            return True, f"CHANGE_ALTITUDE: {altitude_diff}"
-
-        # Yaw adjustment logic
+        # --- Compute yaw difference ---
         desired_yaw = math.atan2(self.target.y - telemetry_data.y, self.target.x - telemetry_data.x)
         current_yaw = telemetry_data.yaw
         yaw_diff = (desired_yaw - current_yaw) * 180 / math.pi
         yaw_diff = (yaw_diff + 180) % 360 - 180
 
-        if abs(yaw_diff) > self.angle_tolerance:
-            direction = 1 if yaw_diff > 0 else -1
-            self.logger.info(f"Decision: CHANGING_YAW by {yaw_diff} degrees", True)
-            self.connection.mav.command_long_send(
-                1,
-                0,
-                mavutil.mavlink.MAV_CMD_CONDITION_YAW,
-                0,
-                abs(yaw_diff),
-                self.turning_speed,
-                direction,
-                1,
-                0,
-                0,
-                0,
-            )
-            return True, f"CHANGING_YAW: {yaw_diff}"
+        # --- Determine action ---
+        if abs(altitude_diff) > self.height_tolerance:
+            action = "CHANGE_ALTITUDE"
+        elif abs(yaw_diff) > self.angle_tolerance:
+            action = "CHANGING_YAW"
+        else:
+            action = "HOLDING_YAW"
 
-        self.logger.info("Decision: HOLDING_YAW (within tolerance)", True)
-        return True, "HOLDING_YAW"
+        # --- Return structured decision (no logging or MAVLink commands) ---
+        return True, {
+            "avg_velocity": {"x": avg_velocity[0], "y": avg_velocity[1], "z": avg_velocity[2]},
+            "altitude_diff": altitude_diff,
+            "yaw_diff": yaw_diff,
+            "action": action,
+        }
 
 
 # =================================================================================================

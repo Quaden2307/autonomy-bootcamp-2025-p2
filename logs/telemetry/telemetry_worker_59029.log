@@ -1,5 +1,5 @@
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 46] Logger initialized
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 47] Logger initialized
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 0,
             x: 0.0,
             y: 0.0,
@@ -14,8 +14,8 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
-            time_since_boot: 500,
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
+            time_since_boot: 528,
             x: 0.5,
             y: 0.0,
             z: 0.0,
@@ -29,7 +29,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 1000,
             x: 1.0,
             y: 0.0,
@@ -44,7 +44,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 1500,
             x: 1.5,
             y: 0.0,
@@ -59,7 +59,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:57: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 2000,
             x: 2.0,
             y: 0.0,
@@ -74,7 +74,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:57: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:09: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 2500,
             x: 2.5,
             y: 0.0,
@@ -89,7 +89,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:58: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:09: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 3000,
             x: 3.0,
             y: 0.0,
@@ -104,7 +104,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:58: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:10: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 3500,
             x: 3.5,
             y: 0.0,
@@ -119,7 +119,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:59: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:10: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 4000,
             x: 4.0,
             y: 0.0,
@@ -134,7 +134,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:59: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:11: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 4500,
             x: 4.5,
             y: 0.0,
@@ -149,9 +149,9 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:02: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry.py | run | 138] Did not receive both ATTITUDE and POSITION in time
-14:04:02: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 62] Telemetry run failed or returned no data
-14:04:03: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:13: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry.py | run | 140] Did not receive both ATTITUDE and POSITION in time
+23:02:13: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 63] Telemetry run failed or returned no data
+23:02:14: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 111,
             x: 3.0,
             y: 2.0,
@@ -166,7 +166,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:04: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:15: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 500,
             x: 0.3333333432674408,
             y: 0.0,
@@ -181,7 +181,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:04: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:15: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 1000,
             x: 0.6666666865348816,
             y: 0.0,
@@ -196,7 +196,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:05: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:16: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 1500,
             x: 1.3333333730697632,
             y: 0.0,
@@ -211,7 +211,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:05: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:16: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 2000,
             x: 1.6666666269302368,
             y: 0.0,
@@ -226,7 +226,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:06: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:17: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 2500,
             x: 2.3333332538604736,
             y: 0.0,
@@ -241,7 +241,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:06: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:17: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 3000,
             x: 2.6666667461395264,
             y: 0.0,
@@ -256,7 +256,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:07: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:18: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 3500,
             x: 3.3333332538604736,
             y: 0.0,
@@ -271,7 +271,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:07: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:18: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 4000,
             x: 3.6666667461395264,
             y: 0.0,
@@ -286,7 +286,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 66] Telemetry pushed: {
+23:02:19: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 67] Telemetry pushed: {
             time_since_boot: 4500,
             x: 4.333333492279053,
             y: 0.0,
@@ -301,5 +301,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:04:10: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry.py | run | 138] Did not receive both ATTITUDE and POSITION in time
-14:04:10: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 62] Telemetry run failed or returned no data
+23:02:21: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry.py | run | 140] Did not receive both ATTITUDE and POSITION in time
+23:02:21: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 63] Telemetry run failed or returned no data
+23:02:23: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry.py | run | 140] Did not receive both ATTITUDE and POSITION in time
+23:02:23: [WARNING] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/telemetry/telemetry_worker.py | telemetry_worker | 63] Telemetry run failed or returned no data

@@ -1,6 +1,6 @@
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | main | 112] Connected!
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:06: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
+23:02:06: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | main | 111] Connected!
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 0,
             x: 0.0,
             y: 0.0,
@@ -15,8 +15,8 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
-            time_since_boot: 500,
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 528,
             x: 0.5,
             y: 0.0,
             z: 0.0,
@@ -30,7 +30,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 1000,
             x: 1.0,
             y: 0.0,
@@ -45,7 +45,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 1500,
             x: 1.5,
             y: 0.0,
@@ -60,7 +60,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:57: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:08: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 2000,
             x: 2.0,
             y: 0.0,
@@ -75,7 +75,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:57: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:09: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 2500,
             x: 2.5,
             y: 0.0,
@@ -90,7 +90,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:58: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:09: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 3000,
             x: 3.0,
             y: 0.0,
@@ -105,7 +105,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:58: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:10: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 3500,
             x: 3.5,
             y: 0.0,
@@ -120,7 +120,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:59: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:10: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 4000,
             x: 4.0,
             y: 0.0,
@@ -135,7 +135,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-14:03:59: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 69] Worker output: {
+23:02:11: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
             time_since_boot: 4500,
             x: 4.5,
             y: 0.0,
@@ -146,6 +146,156 @@
             roll: 0.0,
             pitch: 0.0,
             yaw: 1.0471975803375244,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:14: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 111,
+            x: 3.0,
+            y: 2.0,
+            z: 1.0,
+            x_velocity: 777.0,
+            y_velocity: 777.0,
+            z_velocity: 777.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 0.0,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:15: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 500,
+            x: 0.3333333432674408,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 1.5707963705062866,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:15: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 1000,
+            x: 0.6666666865348816,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 3.1415927410125732,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:16: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 1500,
+            x: 1.3333333730697632,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: -1.5707963705062866,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:16: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 2000,
+            x: 1.6666666269302368,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 0.0,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:17: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 2500,
+            x: 2.3333332538604736,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 1.5707963705062866,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:17: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 3000,
+            x: 2.6666667461395264,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 3.1415927410125732,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:18: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 3500,
+            x: 3.3333332538604736,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: -1.5707963705062866,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:18: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 4000,
+            x: 3.6666667461395264,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 0.0,
+            roll_speed: 0.0,
+            pitch_speed: 0.0,
+            yaw_speed: 3.1415927410125732
+        }
+23:02:19: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_telemetry.py | read_queue | 68] Worker output: {
+            time_since_boot: 4500,
+            x: 4.333333492279053,
+            y: 0.0,
+            z: 0.0,
+            x_velocity: 1.0,
+            y_velocity: 0.0,
+            z_velocity: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 1.5707963705062866,
             roll_speed: 0.0,
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732

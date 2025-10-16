@@ -49,7 +49,7 @@ def telemetry_worker(
     # =============================================================================================
     # Instantiate class object (telemetry.Telemetry)
     result, telemetry_instance = telemetry.Telemetry.create(connection, local_logger)
-    if not result or telemetry_instance is None:
+    if not result:
         local_logger.error("Failed to create Telemetry instance", True)
         return
     # Main loop: do work.
@@ -57,7 +57,7 @@ def telemetry_worker(
         controller.check_pause()
 
         success, data = telemetry_instance.run()
-        if not success or data is None:
+        if not success:
             local_logger.warning("Telemetry run failed or returned no data", True)
             continue
 

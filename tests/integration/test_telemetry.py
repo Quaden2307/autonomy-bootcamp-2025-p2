@@ -13,6 +13,7 @@ from modules.common.modules.logger import logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
 from modules.telemetry import telemetry_worker
 from utilities.workers import queue_proxy_wrapper
+from utilities.workers.queue_proxy_wrapper import QueueProxyWrapper
 from utilities.workers import worker_controller
 
 
@@ -46,11 +47,15 @@ def start_drone() -> None:
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
-def stop(controller: worker_controller.WorkerController) -> None:
+def stop(
+    controller: worker_controller.WorkerController, output_queue: QueueProxyWrapper | None = None
+) -> None:
     """
     Stop the workers.
     """
-    controller.request_exit()  # Add logic to stop your worker
+    controller.request_exit()
+    if output_queue is not None:
+        queue_proxy_wrapper.QueueProxyWrapper.drain_all([output_queue])
 
 
 def read_queue(
@@ -123,7 +128,9 @@ def main() -> int:
     output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=0)
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
-    threading.Timer(TELEMETRY_PERIOD * NUM_TRIALS * 2 + NUM_FAILS, stop, (controller,)).start()
+    threading.Timer(
+        TELEMETRY_PERIOD * NUM_TRIALS * 2 + NUM_FAILS, stop, (controller, output_queue)
+    ).start()
 
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(output_queue, controller, main_logger)).start()
