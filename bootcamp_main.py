@@ -148,9 +148,7 @@ def main() -> int:
         (telemetry_props, "telemetry"),
         (command_props, "command"),
     ]:
-        result, worker = worker_manager.WorkerManager.create(
-            props, controller
-        )
+        result, worker = worker_manager.WorkerManager.create(props, controller)
         if not result or worker is None:
             main_logger.error(f"Failed to create {name} worker manager", True)
             return -1
