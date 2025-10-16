@@ -31,7 +31,7 @@ class HeartbeatReceiver:
         try:
             instance = HeartbeatReceiver(cls.__private_key, connection, local_logger)
             return True, instance
-        except Exception as e:
+        except (OSError, ValueError, RuntimeError) as e:
             local_logger.error(f"Failed to create HeartbeatReceiver: {e}", True)
             return False, None
 

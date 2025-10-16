@@ -67,14 +67,12 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.angle_tolerance = 5
         self.turning_speed = 5
 
+        self.x_samples: list[float] = []
+        self.y_samples: list[float] = []
+        self.z_samples: list[float] = []
+
     def run(self, telemetry_data: object) -> tuple[bool, dict]:
         """Make a decision based on received telemetry data."""
-
-        # Initialize persistent velocity samples
-        if not hasattr(self, "x_samples"):
-            self.x_samples = []
-            self.y_samples = []
-            self.z_samples = []
 
         # --- Compute average velocity vector ---
         if (
