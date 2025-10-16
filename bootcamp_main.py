@@ -149,7 +149,7 @@ def main() -> int:
         (command_props, "command"),
     ]:
         result, worker = worker_manager.WorkerManager.create(
-            props, controller, main_logger, main_logger
+            props, controller
         )
         if not result or worker is None:
             main_logger.error(f"Failed to create {name} worker manager", True)
