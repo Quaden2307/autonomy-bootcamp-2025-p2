@@ -83,13 +83,13 @@ def main() -> int:
     # Create a multiprocess manager for synchronized queues
     manager = mp.Manager()
     # Create queues
-    heartbeat_in = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
+
     heartbeat_out = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
 
-    telemetry_in = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
+
     telemetry_out = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
 
-    command_in = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
+
     command_out = queue_proxy_wrapper.QueueProxyWrapper(manager, maxsize=QUEUE_MAXSIZE)
     # Create worker properties for each worker type (what inputs it takes, how many workers)
 
@@ -110,7 +110,7 @@ def main() -> int:
     # Heartbeat receiver
     heartbeat_receiver_props = worker_manager.WorkerProperties.create(
         heartbeat_receiver_worker.heartbeat_receiver_worker,
-        (connection, controller, heartbeat_out),
+        (connection, {"controller": controller, "output_queue": heartbeat_out}),
         NUM_HEARTBEAT_RECEIVERS,
         [],
         [heartbeat_out],
@@ -177,7 +177,7 @@ def main() -> int:
                         main_logger.warning("Drone disconnected — shutting down workers", True)
                         controller.request_exit()
                         break
-                    elif status == "CONNECTED":
+                    if status == "CONNECTED":
                         main_logger.info("Connection status: connected")
                     else:
                         main_logger.debug(f"Heartbeat status: {status}")
