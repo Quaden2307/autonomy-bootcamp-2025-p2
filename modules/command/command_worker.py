@@ -63,53 +63,17 @@ def command_worker(
         result, decision_data = command_instance.run(telemetry_data)
         if not result:
             continue
-
-        action = decision_data["action"]
-
-        # === MAVLink execution logic ===
-        if action == "CHANGE_ALTITUDE":
-            altitude_diff = decision_data["altitude_diff"]
-            connection.mav.command_long_send(
-                1,
-                0,
-                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
-                0,
-                abs(altitude_diff),
-                0,
-                0,
-                0,
-                0,
-                0,
-                target.z,
-            )
-
-        elif action == "CHANGING_YAW":
-            yaw_diff = decision_data["yaw_diff"]
-            direction = -1 if yaw_diff > 0 else 1
-            connection.mav.command_long_send(
-                1,
-                0,
-                mavutil.mavlink.MAV_CMD_CONDITION_YAW,
-                0,
-                abs(yaw_diff),
-                command_instance.turning_speed,
-                direction,
-                1,
-                0,
-                0,
-                0,
-            )
-
-        # === Push decision to output queue ===
-        output_queue.queue.put(
-            {
-                "type": "decision",
-                "data": decision_data,
-            }
+        
+        output_queue.queue.put({"type": "decision", "data": decision_data})
+        
+        avg = decision_data["avg_velocity"]
+        local_logger.info(
+            f"Average velocity vector: x={avg['x']:.2f}, y={avg['y']:.2f}, z={avg['z']:.2f} m/s", True
         )
 
-    local_logger.info("Worker Shutting Down", True)
+        
 
+    local_logger.info("Worker shutting down.", True)
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
