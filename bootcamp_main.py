@@ -94,8 +94,7 @@ def main() -> int:
     # Heartbeat sender
     heartbeat_sender_props = worker_manager.WorkerProperties.create(
         heartbeat_sender_worker.heartbeat_sender_worker,  # target (function)
-        
-         NUM_HEARTBEAT_SENDERS,  # count
+        NUM_HEARTBEAT_SENDERS,  # count
         (connection, {"controller": controller}),  # work_arguments
         [],  # input_queues
         [],  # output_queues
@@ -181,7 +180,11 @@ def main() -> int:
 
             if not command_out.queue.empty():
                 message = command_out.queue.get_nowait()
-                if isinstance(message, dict) and "type" in message and message["type"] == "decision":
+                if (
+                    isinstance(message, dict)
+                    and "type" in message
+                    and message["type"] == "decision"
+                ):
                     decision = message["data"]
 
                     if "log" in decision:
@@ -214,8 +217,6 @@ def main() -> int:
     main_logger.info("Queues cleared")
 
     # Clean up worker processes
-    for w in reversed(workers):
-        w.stop_workers()
 
     for w in reversed(workers):
         w.join_workers()

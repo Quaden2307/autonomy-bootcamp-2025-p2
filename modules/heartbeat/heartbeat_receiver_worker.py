@@ -47,7 +47,9 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    success, heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger)
+    success, heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(
+        connection, local_logger
+    )
     if not success:
         local_logger.error("Failed to create HeartbeatReceiver instance", True)
         return

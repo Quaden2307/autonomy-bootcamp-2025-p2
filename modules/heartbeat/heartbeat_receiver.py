@@ -75,10 +75,9 @@ class HeartbeatReceiver:
         self.connected = True
 
         if not was_connected:
-            self.logger.info("Drone Connected!", True)
+
             return True, {"status": "CONNECTED", "log": "Drone Connected!"}
 
-        self.logger.debug("Heartbeat OK", True)
         return True, {"status": "HEARTBEAT_OK", "log": ""}
 
 

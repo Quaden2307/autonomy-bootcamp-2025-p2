@@ -71,8 +71,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.y_samples: list[float] = []
         self.z_samples: list[float] = []
 
-
-
     def run(self, telemetry_data: object) -> tuple[bool, dict]:
         """Make a decision based on received telemetry data."""
 
@@ -102,16 +100,17 @@ class Command:  # pylint: disable=too-many-instance-attributes
         if abs(altitude_diff) > self.height_tolerance:
             action = "CHANGE_ALTITUDE"
             self.connection.mav.command_long_send(
-                1, 0,
+                1,
+                0,
                 mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
-                0, 
-                abs(altitude_diff), 
-                0, 
-                0, 
-                0, 
-                0, 
-                0, 
-                self.target.z
+                0,
+                abs(altitude_diff),
+                0,
+                0,
+                0,
+                0,
+                0,
+                self.target.z,
             )
 
             log_message = f"Changing altitude by {altitude_diff:.2f} m"
@@ -120,33 +119,31 @@ class Command:  # pylint: disable=too-many-instance-attributes
             action = "CHANGING_YAW"
             direction = -1 if yaw_diff > 0 else 1
             self.connection.mav.command_long_send(
-                1, 0,
+                1,
+                0,
                 mavutil.mavlink.MAV_CMD_CONDITION_YAW,
-                0, 
-                abs(yaw_diff), 
+                0,
+                abs(yaw_diff),
                 self.turning_speed,
-                direction, 
-                1, 
-                0, 
-                0, 
-                0
+                direction,
+                1,
+                0,
+                0,
+                0,
             )
 
             log_message = f"Changing yaw by {yaw_diff:.2f}°"
 
-            
         else:
             action = "HOLDING_YAW"
             log_message = "Holding position and yaw"
-
-
 
         return True, {
             "avg_velocity": {"x": avg_velocity[0], "y": avg_velocity[1], "z": avg_velocity[2]},
             "altitude_diff": altitude_diff,
             "yaw_diff": yaw_diff,
             "action": action,
-            "log": log_message
+            "log": log_message,
         }
 
 
