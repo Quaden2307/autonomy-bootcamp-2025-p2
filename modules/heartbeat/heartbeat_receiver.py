@@ -56,36 +56,30 @@ class HeartbeatReceiver:
         )
         self.connected = False
 
-    def run(
-        self,
-    ) -> tuple[bool, str]:
-        """
-        Attempt to recieve a heartbeat message.
-        If disconnected for over a threshold number of periods,
-        the connection is considered disconnected.
-        """
+    def run(self) -> tuple[bool, dict]:
+        """Receive a heartbeat and determine connection status."""
+        msg = self.connection.recv_match(type="HEARTBEAT", blocking=False)
 
-        msg = self.connection.recv_match(type="HEARTBEAT", blocking=True)
+        # No message received
         if msg is None:
             self.missed_heartbeats += 1
-
-            self.logger.warning(f"Missed heartbeat ({self.missed_heartbeats})", True)
-
             if self.missed_heartbeats >= self.max_missed:
                 if self.connected:
-                    self.logger.error("Drone disconnected", True)
                     self.connected = False
-                return False, "DISCONNECTED"
+                    return False, {"status": "DISCONNECTED", "log": "Drone disconnected"}
+            return False, {"status": "WAITING", "log": ""}
 
-            return False, None
-
+        # Successful heartbeat
         self.missed_heartbeats = 0
-        if not self.connected:
-            self.logger.info("Drone Connected", True)
-            self.connected = True
-        else:
-            self.logger.debug("HEARTBEAT_OK", True)
-        return True, "HEARTBEAT_OK"
+        was_connected = self.connected
+        self.connected = True
+
+        if not was_connected:
+            self.logger.info("Drone Connected!", True)
+            return True, {"status": "CONNECTED", "log": "Drone Connected!"}
+
+        self.logger.debug("Heartbeat OK", True)
+        return True, {"status": "HEARTBEAT_OK", "log": ""}
 
 
 # =================================================================================================

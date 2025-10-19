@@ -94,11 +94,9 @@ def main() -> int:
     # Heartbeat sender
     heartbeat_sender_props = worker_manager.WorkerProperties.create(
         heartbeat_sender_worker.heartbeat_sender_worker,  # target (function)
-        (
-            connection,
-            {"controller": controller},
-        ),  # work_arguments
-        NUM_HEARTBEAT_SENDERS,  # count
+        
+         NUM_HEARTBEAT_SENDERS,  # count
+        (connection, {"controller": controller}),  # work_arguments
         [],  # input_queues
         [],  # output_queues
         controller,  # controller
@@ -108,8 +106,8 @@ def main() -> int:
     # Heartbeat receiver
     heartbeat_receiver_props = worker_manager.WorkerProperties.create(
         heartbeat_receiver_worker.heartbeat_receiver_worker,
-        (connection, {"controller": controller, "output_queue": heartbeat_out}),
         NUM_HEARTBEAT_RECEIVERS,
+        (connection, {"controller": controller, "output_queue": heartbeat_out}),
         [],
         [heartbeat_out],
         controller,
@@ -119,11 +117,8 @@ def main() -> int:
     # Telemetry
     telemetry_props = worker_manager.WorkerProperties.create(
         telemetry_worker.telemetry_worker,
-        (
-            connection,
-            {"controller": controller, "output_queue": telemetry_out},
-        ),
         NUM_TELEMETRY,
+        (connection, {"controller": controller, "output_queue": telemetry_out}),
         [],
         [telemetry_out],
         controller,
@@ -132,8 +127,8 @@ def main() -> int:
     # Command
     command_props = worker_manager.WorkerProperties.create(
         command_worker.command_worker,
-        (connection, TARGET_POSITION, None, telemetry_out, command_out, controller, main_logger),
         NUM_COMMAND,
+        (connection, TARGET_POSITION, telemetry_out, command_out, controller, main_logger),
         [telemetry_out],  # inputs
         [command_out],  # outputs
         controller,
@@ -169,14 +164,14 @@ def main() -> int:
 
                 if isinstance(msg, dict) and "status" in msg:
                     status = msg["status"].upper()
+                    if "log" in msg and msg["log"]:
+                        main_logger.info(msg["log"], True)
+
+                    main_logger.info(f"Heartbeat status: {status}")
+
                     if status == "DISCONNECTED":
-                        main_logger.warning("Drone disconnected — shutting down workers", True)
                         controller.request_exit()
                         break
-                    if status == "CONNECTED":
-                        main_logger.info("Connection status: connected")
-                    else:
-                        main_logger.debug(f"Heartbeat status: {status}")
                 else:
                     main_logger.info(f"Heartbeat: {msg}")
 
@@ -186,14 +181,19 @@ def main() -> int:
 
             if not command_out.queue.empty():
                 message = command_out.queue.get_nowait()
-                if isinstance(message, dict) and "type" in message:
-                    if message["type"] == "velocity":
-                        v = message["data"]
-                        main_logger.info(
-                            f"Average velocity vector: x={v['x']:.3f}, y={v['y']:.3f}, z={v['z']:.3f} m/s"
-                        )
-                    elif message["type"] == "decision":
-                        main_logger.info(f"Command decision: {message['data']}")
+                if isinstance(message, dict) and "type" in message and message["type"] == "decision":
+                    decision = message["data"]
+
+                    if "log" in decision:
+                        main_logger.info(decision["log"], True)
+
+                    main_logger.info(
+                        f"Decision → Action: {decision['action']}, "
+                        f"Δalt={decision['altitude_diff']:.2f}, Δyaw={decision['yaw_diff']:.2f}, "
+                        f"Velocity=({decision['avg_velocity']['x']:.2f}, "
+                        f"{decision['avg_velocity']['y']:.2f}, {decision['avg_velocity']['z']:.2f})"
+                    )
+
                 else:
                     main_logger.warning(f"Unexpected message format: {message}")
 

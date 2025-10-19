@@ -4,7 +4,7 @@ Heartbeat worker that sends heartbeats periodically.
 
 import os
 import pathlib
-
+import time
 from pymavlink import mavutil
 
 from utilities.workers import worker_controller
@@ -47,36 +47,20 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    success, heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(
-        connection, local_logger
-    )
+    success, heartbeat_instance = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger)
     if not success:
         local_logger.error("Failed to create HeartbeatReceiver instance", True)
         return
 
-    # Main loop: do work.
-    last_status = None
-
     while not controller.is_exit_requested():
         controller.check_pause()
+        result, data = heartbeat_instance.run()
 
-        result, status = heartbeat_instance.run()
+        if output_queue is not None and isinstance(data, dict):
+            # Forward the data (status + log) to main
+            output_queue.queue.put(data)
 
-        # Handle disconnection
-        if not result and status == "DISCONNECTED":
-            if last_status != "DISCONNECTED":
-                last_status = "DISCONNECTED"
-                local_logger.warning("Drone disconnected", True)
-                if output_queue is not None:
-                    output_queue.queue.put({"status": "DISCONNECTED"})
-
-        # Handle successful heartbeat
-        elif result and status == "HEARTBEAT_OK":
-            if last_status != "CONNECTED":
-                last_status = "CONNECTED"
-                local_logger.info("Heartbeat OK", True)
-                if output_queue is not None:
-                    output_queue.queue.put({"status": "CONNECTED"})
+        time.sleep(1.0)
 
     local_logger.info("Heartbeat receiver worker shutting down.", True)
 

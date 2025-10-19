@@ -47,23 +47,23 @@ def heartbeat_sender_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_sender.HeartbeatSender)
-    result, sender_instance = heartbeat_sender.HeartbeatSender.create(connection, local_logger)
-    if not result:
-        local_logger.error("Failed to create HeartbeatSender instance", True)
-        return
-
-    # Main loop: do work.
     while not controller.is_exit_requested():
         controller.check_pause()
 
-        result, status = sender_instance.run()
+        try:
+            # Send a MAVLink HEARTBEAT message
+            connection.mav.heartbeat_send(
+                mavutil.mavlink.MAV_TYPE_GENERIC,  # generic system type
+                mavutil.mavlink.MAV_AUTOPILOT_INVALID,  # no autopilot
+                0, 0, 0, 0  # base_mode, custom_mode, system_status
+            )
+            local_logger.debug("Sent heartbeat message", True)
+        except Exception as e:
+            local_logger.error(f"Failed to send heartbeat: {e}", True)
 
-        if not result:
-            local_logger.error("Failed to send heartbeat", True)
-        else:
-            local_logger.info(f"Heartbeat sent successfully: {status}", True)
+        time.sleep(1.0)  # 1 Hz heartbeat rate
 
-        time.sleep(1)  # Send heartbeat every second
+    local_logger.info("Heartbeat sender worker shutting down.", True)
 
 
 # =================================================================================================
