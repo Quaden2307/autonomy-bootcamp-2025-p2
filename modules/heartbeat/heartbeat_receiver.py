@@ -43,6 +43,7 @@ class HeartbeatReceiver:
         connection: mavutil.mavfile,
         local_logger: logger.Logger,
     ) -> None:
+        """Initialize the HeartbeatReceiver object."""
         assert key is HeartbeatReceiver.__private_key, "Use create() method"
 
         # Do any intializiation here
@@ -57,6 +58,7 @@ class HeartbeatReceiver:
         self.connected = False
 
     def run(self) -> dict:
+        """Receive a heartbeat and determine connection status."""
         msg = self.connection.recv_match(type="HEARTBEAT", blocking=False)
         if msg is None:
             self.missed_heartbeats += 1
@@ -68,11 +70,11 @@ class HeartbeatReceiver:
                 self.connected = True
                 return {"status": "CONNECTED", "log": "Drone Connected!"}
             return {"status": "CONNECTED", "log": ""}
-        else:
-            if self.connected:
-                self.connected = False
-                return {"status": "DISCONNECTED", "log": "Drone Disconnected!"}
-            return {"status": "DISCONNECTED", "log": ""}
+        
+        if self.connected:
+            self.connected = False
+            return {"status": "DISCONNECTED", "log": "Drone Disconnected!"}
+        return {"status": "DISCONNECTED", "log": ""}
 
 
 # =================================================================================================
