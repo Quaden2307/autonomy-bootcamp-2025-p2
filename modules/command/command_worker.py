@@ -66,12 +66,6 @@ def command_worker(
 
         output_queue.queue.put({"type": "decision", "data": decision_data})
 
-        avg = decision_data["avg_velocity"]
-        local_logger.info(
-            f"Average velocity vector: x={avg['x']:.2f}, y={avg['y']:.2f}, z={avg['z']:.2f} m/s",
-            True,
-        )
-
     local_logger.info("Worker shutting down.", True)
 
 

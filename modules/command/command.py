@@ -138,8 +138,12 @@ class Command:  # pylint: disable=too-many-instance-attributes
             action = "HOLDING_YAW"
             log_message = "Holding position and yaw"
 
+            self.logger.info(
+                f"Average velocity → x={avg_velocity[0]:.2f}, y={avg_velocity[1]:.2f}, z={avg_velocity[2]:.2f}",
+                True,
+            )
+
         return True, {
-            "avg_velocity": {"x": avg_velocity[0], "y": avg_velocity[1], "z": avg_velocity[2]},
             "altitude_diff": altitude_diff,
             "yaw_diff": yaw_diff,
             "action": action,

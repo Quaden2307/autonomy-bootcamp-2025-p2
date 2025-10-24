@@ -56,29 +56,23 @@ class HeartbeatReceiver:
         )
         self.connected = False
 
-    def run(self) -> tuple[bool, dict]:
-        """Receive a heartbeat and determine connection status."""
+    def run(self) -> dict:
         msg = self.connection.recv_match(type="HEARTBEAT", blocking=False)
-
-        # No message received
         if msg is None:
             self.missed_heartbeats += 1
-            if self.missed_heartbeats >= self.max_missed:
-                if self.connected:
-                    self.connected = False
-                    return False, {"status": "DISCONNECTED", "log": "Drone disconnected"}
-            return False, {"status": "WAITING", "log": ""}
+        else:
+            self.missed_heartbeats = 0
 
-        # Successful heartbeat
-        self.missed_heartbeats = 0
-        was_connected = self.connected
-        self.connected = True
-
-        if not was_connected:
-
-            return True, {"status": "CONNECTED", "log": "Drone Connected!"}
-
-        return True, {"status": "HEARTBEAT_OK", "log": ""}
+        if self.missed_heartbeats < self.max_missed:
+            if not self.connected:
+                self.connected = True
+                return {"status": "CONNECTED", "log": "Drone Connected!"}
+            return {"status": "CONNECTED", "log": ""}
+        else:
+            if self.connected:
+                self.connected = False
+                return {"status": "DISCONNECTED", "log": "Drone Disconnected!"}
+            return {"status": "DISCONNECTED", "log": ""}
 
 
 # =================================================================================================

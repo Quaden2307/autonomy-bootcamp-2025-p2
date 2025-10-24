@@ -1,2 +1,23 @@
-16:49:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
-16:49:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | main | 114] Connected!
+21:01:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/modules/common/modules/logger/logger_main_setup.py | setup_main_logger | 62] main logger initialized
+21:01:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | main | 118] Connected!
+21:01:44: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': 'Drone Connected!'}
+21:01:45: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:46: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:47: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:48: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:49: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:50: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:51: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:52: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:53: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'DISCONNECTED', 'log': 'Drone Disconnected!'}
+21:01:54: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'DISCONNECTED', 'log': ''}
+21:01:55: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'DISCONNECTED', 'log': ''}
+21:01:56: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'DISCONNECTED', 'log': ''}
+21:01:57: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': 'Drone Connected!'}
+21:01:58: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:01:59: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:02:00: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:02:01: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:02:02: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:02:03: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}
+21:02:04: [INFO] [/Users/Quaden/autonomy-bootcamp-2025-p2/tests/integration/test_heartbeat_receiver.py | read_queue | 72] Worker output: {'status': 'CONNECTED', 'log': ''}

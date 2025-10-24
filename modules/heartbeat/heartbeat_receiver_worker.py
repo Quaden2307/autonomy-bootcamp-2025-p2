@@ -19,7 +19,7 @@ from ..common.modules.logger import logger
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
     controller: worker_controller.WorkerController,
-    output_queue: QueueProxyWrapper | None = None,
+    output_queue: QueueProxyWrapper,
     # Add other necessary worker arguments here
 ) -> None:
     """
@@ -56,10 +56,9 @@ def heartbeat_receiver_worker(
 
     while not controller.is_exit_requested():
         controller.check_pause()
-        result, data = heartbeat_instance.run()
+        data = heartbeat_instance.run()
 
-        if output_queue is not None and isinstance(data, dict):
-            # Forward the data (status + log) to main
+        if isinstance(data, dict):
             output_queue.queue.put(data)
 
         time.sleep(1.0)

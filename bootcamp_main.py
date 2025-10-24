@@ -156,55 +156,39 @@ def main() -> int:
     # Main's work: read from all queues that output to main, and log any commands that we make
     # Continue running for 100 seconds or until the drone disconnects
     start_time = time.time()
-    while time.time() - start_time < RUN_TIME and controller.is_exit_requested() is False:
+    # Main process loop — read messages from each worker's output queue.
+    # This loop runs until the controller requests exit or runtime limit is reached.
+    while time.time() - start_time < RUN_TIME and not controller.is_exit_requested():
         try:
+            # Heartbeat output
             while not heartbeat_out.queue.empty():
                 msg = heartbeat_out.queue.get_nowait()
 
-                if isinstance(msg, dict) and "status" in msg:
-                    status = msg["status"].upper()
-                    if "log" in msg and msg["log"]:
-                        main_logger.info(msg["log"], True)
+                main_logger.info(f"Heartbeat output: {msg}", True)
 
-                    main_logger.info(f"Heartbeat status: {status}")
+                # Exit condition: stop main if the drone disconnects
+                if isinstance(msg, dict) and msg.get("status", "").upper() == "DISCONNECTED":
+                    controller.request_exit()
+                    break
 
-                    if status == "DISCONNECTED":
-                        controller.request_exit()
-                        break
-                else:
-                    main_logger.info(f"Heartbeat: {msg}")
-
-            if not telemetry_out.queue.empty():
+            # Telemetry output
+            while not telemetry_out.queue.empty():
                 data = telemetry_out.queue.get_nowait()
-                main_logger.info(f"Telemetry: {data}")
+                main_logger.info(f"Telemetry output: {data}")
 
-            if not command_out.queue.empty():
+            # Command output
+            while not command_out.queue.empty():
                 message = command_out.queue.get_nowait()
-                if (
-                    isinstance(message, dict)
-                    and "type" in message
-                    and message["type"] == "decision"
-                ):
-                    decision = message["data"]
-
-                    if "log" in decision:
-                        main_logger.info(decision["log"], True)
-
-                    main_logger.info(
-                        f"Decision → Action: {decision['action']}, "
-                        f"Δalt={decision['altitude_diff']:.2f}, Δyaw={decision['yaw_diff']:.2f}, "
-                        f"Velocity=({decision['avg_velocity']['x']:.2f}, "
-                        f"{decision['avg_velocity']['y']:.2f}, {decision['avg_velocity']['z']:.2f})"
-                    )
-
-                else:
-                    main_logger.warning(f"Unexpected message format: {message}")
+                main_logger.info(f"Command output: {message}")
 
         except queue.Empty:
             continue
         except (OSError, RuntimeError, ValueError) as e:
             main_logger.error(f"Error while reading queues: {e}")
             break
+
+        # Avoid high CPU usage
+        time.sleep(0.1)
 
         # small sleep to avoid pegging CPU
         time.sleep(0.1)

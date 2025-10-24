@@ -64,13 +64,16 @@ def read_queue(
 ) -> None:
     """
     Read and print the output queue.
+    Ensure final messages (e.g. Drone Disconnected) are read before exiting.
     """
-    while not controller.is_exit_requested():
+    while not controller.is_exit_requested() or not output_queue.queue.empty():
         try:
             data = output_queue.queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
         except (OSError, ValueError, RuntimeError):
-            continue  # Add logic to read from your worker's output queue and print it using the logger
+            continue
+        except Exception:
+            continue
 
 
 # =================================================================================================
@@ -139,6 +142,7 @@ def main() -> int:
     heartbeat_receiver_worker.heartbeat_receiver_worker(
         connection,
         controller,
+        output_queue,
         # Place your own arguments here
     )
     # =============================================================================================
