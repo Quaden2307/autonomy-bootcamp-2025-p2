@@ -72,7 +72,7 @@ def read_queue(
             main_logger.info(f"Worker output: {data}")
         except (OSError, ValueError, RuntimeError):
             continue
-        except Exception:
+        except (OSError, RuntimeError, ValueError):
             continue
 
 
