@@ -70,7 +70,7 @@ class HeartbeatReceiver:
                 self.connected = True
                 return {"status": "CONNECTED", "log": "Drone Connected!"}
             return {"status": "CONNECTED", "log": ""}
-        
+
         if self.connected:
             self.connected = False
             return {"status": "DISCONNECTED", "log": "Drone Disconnected!"}
