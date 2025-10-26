@@ -92,7 +92,7 @@ def main() -> int:
     # Create worker properties for each worker type (what inputs it takes, how many workers)
 
     # Heartbeat sender
-    heartbeat_sender_props = worker_manager.WorkerProperties.create(
+    result, heartbeat_sender_props = worker_manager.WorkerProperties.create(
         heartbeat_sender_worker.heartbeat_sender_worker,  # target (function)
         NUM_HEARTBEAT_SENDERS,  # count
         (connection, {"controller": controller}),  # work_arguments
@@ -101,9 +101,12 @@ def main() -> int:
         controller,  # controller
         main_logger,
     )
+    if not result:
+        main_logger.error("Failed to create heartbeat sender properties", True)
+        return -1
 
     # Heartbeat receiver
-    heartbeat_receiver_props = worker_manager.WorkerProperties.create(
+    result, heartbeat_receiver_props = worker_manager.WorkerProperties.create(
         heartbeat_receiver_worker.heartbeat_receiver_worker,
         NUM_HEARTBEAT_RECEIVERS,
         (connection, {"controller": controller, "output_queue": heartbeat_out}),
@@ -112,9 +115,12 @@ def main() -> int:
         controller,
         main_logger,
     )
+    if not result:
+        main_logger.error("Failed to create heartbeat receiver properties", True)
+        return -1
 
     # Telemetry
-    telemetry_props = worker_manager.WorkerProperties.create(
+    result, telemetry_props = worker_manager.WorkerProperties.create(
         telemetry_worker.telemetry_worker,
         NUM_TELEMETRY,
         (connection, {"controller": controller, "output_queue": telemetry_out}),
@@ -123,8 +129,12 @@ def main() -> int:
         controller,
         main_logger,
     )
+
+    if not result:
+        main_logger.error("Failed to create telemetry properties", True)
+        return -1
     # Command
-    command_props = worker_manager.WorkerProperties.create(
+    result, command_props = worker_manager.WorkerProperties.create(
         command_worker.command_worker,
         NUM_COMMAND,
         (connection, TARGET_POSITION, telemetry_out, command_out, controller, main_logger),
@@ -133,7 +143,9 @@ def main() -> int:
         controller,
         main_logger,
     )
-
+    if not result:
+        main_logger.error("Failed to create command properties", True)
+        return -1
     workers = []
 
     for props, name in [
@@ -190,8 +202,6 @@ def main() -> int:
         # Avoid high CPU usage
         time.sleep(0.1)
 
-        # small sleep to avoid pegging CPU
-        time.sleep(0.1)
     # Stop the processes
     controller.request_exit()
     main_logger.info("Requested exit")

@@ -71,8 +71,15 @@ def read_queue(
     while not controller.is_exit_requested():
         try:
             data = output_queue.queue.get(timeout=1)
-            main_logger.info(f"Worker output: {data}")
-        except (OSError, ValueError, RuntimeError):
+            if isinstance(data, dict) and "data" in data and isinstance(data["data"], dict):
+                d = data["data"]
+                alt = d.get("altitude_diff")
+                yaw = d.get("yaw_diff")
+                main_logger.info(f"Change → Altitude: {alt:.2f} m, Yaw: {yaw:.2f}°")
+            else:
+                main_logger.info(f"Worker output: {data}")
+        except (OSError, ValueError, RuntimeError) as e:
+            main_logger.error(f"Error reading from queue: {e}")
             continue
 
 

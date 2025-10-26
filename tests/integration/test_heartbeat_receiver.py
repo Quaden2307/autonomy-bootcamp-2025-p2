@@ -70,7 +70,8 @@ def read_queue(
         try:
             data = output_queue.queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
-        except (OSError, ValueError, RuntimeError):
+        except (OSError, ValueError, RuntimeError) as e:
+            main_logger.error(f"Error reading from queue: {e}")
             continue
 
 

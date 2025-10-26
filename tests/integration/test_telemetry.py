@@ -54,8 +54,8 @@ def stop(
     Stop the workers.
     """
     controller.request_exit()
-    if output_queue is not None:
-        queue_proxy_wrapper.QueueProxyWrapper.drain_all([output_queue])
+
+    queue_proxy_wrapper.QueueProxyWrapper.drain_all([output_queue])
 
 
 def read_queue(
@@ -70,7 +70,8 @@ def read_queue(
         try:
             data = output_queue.queue.get(timeout=1)
             main_logger.info(f"Worker output: {data}")
-        except (OSError, ValueError, RuntimeError):
+        except (OSError, ValueError, RuntimeError) as e:
+            main_logger.error(f"Error reading from queue: {e}")
             continue  # Add logic to read from your worker's output queue and print it using the logger
 
 
